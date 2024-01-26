@@ -163,6 +163,7 @@ def send_command(command: int, sock):
 
 def collect(interval: float):
     global STOP_COLLECTING
+    global DEVICE_ADDRESS
     
     sock = connect_to_usb_tester(DEVICE_ADDRESS)
     
@@ -185,7 +186,6 @@ def collect(interval: float):
     sock.close()
 
 if __name__ == "__main__":
-    sock = connect_to_usb_tester(DEVICE_ADDRESS)
     try:
         print("\nPress Enter to stop Collection of power data\n")
         time.sleep(1)
@@ -195,8 +195,6 @@ if __name__ == "__main__":
             print(e)
     else:
         input()
-    finally:
-        sock.close()
 
 """
 All data returned by the device consists of measurements and configuration status, in 130-byte chunks. To my knowledge, it will never send any other data. All bytes below are displayed in hex format; every command is a single byte.
