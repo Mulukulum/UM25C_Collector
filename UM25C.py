@@ -176,8 +176,10 @@ def collect(interval: float):
             d = read_measurements(sock)
         except bluetooth.BluetoothError as e:
             time.sleep(0.2)
+            continue
         except Exception as e:
             print(e)
+            continue
 
         # Replace the print statement with whatever logging you want.
         print(d)
