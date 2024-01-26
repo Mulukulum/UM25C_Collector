@@ -252,7 +252,7 @@ sudo bluetoothctl
 # scan on
 # pair ###BTADDR###
 # trust ###BTADDR###
-./um25c_bluetooth_receiver.py ###BTADDR###
+python3 UM25C.py ###BTADDR###
 You can also manually set the bluetooth address of the device as a string, that variable is placed just after the imports. 
 """
 
