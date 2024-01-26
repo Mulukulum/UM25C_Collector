@@ -140,9 +140,9 @@ def read_measurements(sock):
     selected_data_group = (struct.unpack("!H", d[14:16]))[0]
     
     array = [x for x in struct.unpack("!"+("I"*20),d[16:96])]
-    cumulative_mwh_mah_of_datagroups_as_list_of_tuples = [(array[i], array[i+1]) for i in range(len(array))]
+    cumulative_mwh_mah_of_datagroups_as_list_of_tuples = [(array[i], array[i+1]) for i in range(0, len(array), 2)]
     usb_data_pos_voltage, usb_data_neg_voltage = [x / 100 for x in struct.unpack("!HH", d[96:100])]
-    charging_mode = (struct.unpack("!H", d[100]))[0]
+    charging_mode = (struct.unpack("!H", d[100:102]))[0]
     mAh, mWh = [x for x in struct.unpack("!II", d[102:110])]
     configured_amperage_recording_threshold = (struct.unpack("!H", d[110:112]))[0] / 100
     duration_of_threshold_recording_in_cumulative_seconds = (struct.unpack("!I", d[112:116]))[0]
@@ -197,6 +197,7 @@ if __name__ == "__main__":
             print(e)
     else:
         input()
+        STOP_COLLECTING = True
 
 """
 All data returned by the device consists of measurements and configuration status, in 130-byte chunks. To my knowledge, it will never send any other data. All bytes below are displayed in hex format; every command is a single byte.
